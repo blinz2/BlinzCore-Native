@@ -1,10 +1,6 @@
 #ifndef IMAGE_H
 #define IMAGE_H
 
-#include <vector>
-
-using std::vector;
-
 template <typename T>
 class ResourceManager {
 	private:
@@ -13,22 +9,30 @@ class ResourceManager {
 				int upperBound, lowerBound;
 				RecycledIndices* next;
 			public:
-				RecycledIndices();
+				RecycledIndices(int start);
 
-				int getUpperBound();
+				/**
+				 * Inserts the given value in this node if this value will fit contiguously in it.
+				 */
+				bool insert(int index);
 
-				int getLowerBound();
-
+				int popLowestIndex();
+				
+			private:
 				void setNext(RecycledIndices* next);
 
+				RecycledIndices* getNext();
+ 
 				void incrementUpperBound();
 
-				void incrementLowerBound();
+				void decrementLowerBound();
 		};
 		RecycledIndices *recycled;
-		vector<T> resources;
+		int elements;
+		T* list;
 	public:
 		ResourceManager();
+
 		/**
  		 * Adds the given element to the list.
  		 * @param element the element to be added
