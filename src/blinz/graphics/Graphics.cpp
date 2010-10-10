@@ -3,7 +3,12 @@
 #include "../util/ResourceManager.hpp"
 #include "Graphics.hpp"
 
+SDL_Surface* screen = 0;
 ResourceManager<SDL_Surface*> images;
+
+void initializeScreen(int width, int height) {
+	screen = SDL_SetVideoMode(width, height, 24, SDL_DOUBLEBUF);
+}
 
 int loadImage(const string* path) {
 	SDL_Surface* img1 = IMG_Load(path->c_str());
