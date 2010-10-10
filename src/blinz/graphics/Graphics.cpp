@@ -12,3 +12,7 @@ int loadImage(const string* path) {
 	return images.add(img1);
 }
 
+void unloadImage(int index) {
+	SDL_FreeSurface(images.remove(index));
+}
+
