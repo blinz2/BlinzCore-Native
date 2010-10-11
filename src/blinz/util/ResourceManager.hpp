@@ -22,6 +22,8 @@ class ResourceManager {
 				void incrementUpperBound();
 
 				void decrementLowerBound();
+
+				void decrementUpperBound();
 		};
 		AvailableIndices *avail;
 		int elements;
@@ -73,7 +75,7 @@ T ResourceManager<T>::remove(int index) {
 	} else {
 		AvailableIndices* current = avail;
 		while (true) {
-			if (current->remove(index, index)) {
+			if (current->remove(index)) {
 				break;
 			}
 			if (current->next != 0) {
@@ -130,14 +132,11 @@ bool ResourceManager<T>::AvailableIndices::remove(int index) {
 	if (index <= upperBound) {
 		if (index == upperBound + 1) {
 			decrementUpperBound();
-		}
-	}
-	if (index == lowerBound - 1) {
-		decrementLowerBound();
-		return true;
-	} else if (index == upperBound + 1) {
-		incrementUpperBound();
-		return true;
+			return true;
+		} else if (index == lowerBound - 1) {
+			decrementLowerBound();
+			return true;
+		} 
 	}
 	return false;
 }
