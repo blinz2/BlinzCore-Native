@@ -6,8 +6,12 @@
 SDL_Surface* screen = 0;
 ResourceManager<SDL_Surface*> images;
 
-void initializeScreen(int width, int height) {
+bool initializeScreen(const string* title, int width, int height) {
+	SDL_Init(SDL_INIT_VIDEO);
+	const char* cstr = title->c_str();
 	screen = SDL_SetVideoMode(width, height, 24, SDL_DOUBLEBUF);
+	SDL_WM_SetCaption(cstr, cstr);
+	return screen != 0;
 }
 
 int loadImage(const string* path) {

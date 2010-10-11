@@ -2,7 +2,7 @@
 
 using std::string;
 
-void initializeScreen(int width, int height);
+bool initializeScreen(const string* title, int width, int height);
 
 void setScreenSize(int width, int height);
 

@@ -48,7 +48,7 @@ class ResourceManager {
 
 template <class T>
 ResourceManager<T>::ResourceManager() {
-	recycled = NULL;
+	recycled = 0;
 	elements = 0;
 	list = new T[500];
 }
@@ -56,7 +56,7 @@ ResourceManager<T>::ResourceManager() {
 template <class T>
 int ResourceManager<T>::add(T element) {
 	int i;
-	if (recycled != NULL) {
+	if (recycled != 0) {
 		i = recycled->popLowestIndex();
 	} else {
 		i = elements;
@@ -68,7 +68,7 @@ int ResourceManager<T>::add(T element) {
 
 template <class T>
 T ResourceManager<T>::remove(int index) {
-	if (recycled == NULL) {
+	if (recycled == 0) {
 		recycled = new RecycledIndices(index);
 	} else {
 		RecycledIndices* current = recycled;
@@ -76,7 +76,7 @@ T ResourceManager<T>::remove(int index) {
 			if (current->insert(index)) {
 				break;
 			}
-			if (current->next != NULL) {
+			if (current->next != 0) {
 				current = current->next;
 			} else {
 				current->setNext(new RecycledIndices(index));
@@ -91,7 +91,7 @@ T ResourceManager<T>::remove(int index) {
 template <class T>
 ResourceManager<T>::RecycledIndices::RecycledIndices(int start = 0) {
 	lowerBound = upperBound = start;
-	next = NULL;
+	next = 0;
 }
 
 template <class T>
@@ -113,7 +113,7 @@ void ResourceManager<T>::RecycledIndices::incrementUpperBound() {
 template <class T>
 int ResourceManager<T>::RecycledIndices::popLowestIndex() {
 	int retval = lowerBound++;
-	if (lowerBound > upperBound && next != NULL) {
+	if (lowerBound > upperBound && next != 0) {
 		RecycledIndices* tmp = next;
 		*this = *next;
 		delete tmp;
