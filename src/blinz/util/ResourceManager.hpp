@@ -13,7 +13,7 @@ class ResourceManager {
 				/**
 				 * Remvoes the given value in this node if this value will fit contiguously in it.
 				 */
-				bool remove(int index);
+				bool add(int index);
 
 				int popLowestIndex();
 
@@ -29,7 +29,7 @@ class ResourceManager {
 		int elements;
 		T* list;
 	public:
-		ResourceManager();
+		ResourceManager(int defaultSize);
 
 		/**
  		 * Adds the given element to the list.
@@ -49,10 +49,10 @@ class ResourceManager {
 //implementation///////////////////////////////////////////////////////////////////////////
 
 template <class T>
-ResourceManager<T>::ResourceManager() {
+ResourceManager<T>::ResourceManager(int defaultSize = 500) {
 	avail = new AvailableIndices();
 	elements = 0;
-	list = new T[500];
+	list = new T[defaultSize];
 }
 
 template <class T>
@@ -71,18 +71,27 @@ int ResourceManager<T>::add(T element) {
 template <class T>
 T ResourceManager<T>::remove(int index) {
 	if (avail == 0) {
-		avail = new AvailableIndices(index);
+		avail = new AvailableIndices(index, index);
 	} else {
 		AvailableIndices* current = avail;
-		while (true) {
-			if (current->remove(index)) {
+		if (current->lowerBound > index) {
+			avail = new AvailableIndices(index, index);
+			avail->next = current;
+		} else while (true) {
+			if (current->add(index)) {
 				break;
 			}
-			if (current->next != 0) {
-				current = current->next;
-			} else {
-				current->setNext(new AvailableIndices(index));
+			if (current->next == 0) {
+				current->setNext(new AvailableIndices(index, index));
 				break;
+			} else if (current->next->lowerBound > index) {
+				//insert new node
+				AvailableIndices* i = new AvailableIndices(index, index);
+				i->next = current->next;
+				current->next = i;
+				break;
+			} else {
+				current = current->next;
 			}
 		}
 	}
@@ -91,8 +100,9 @@ T ResourceManager<T>::remove(int index) {
 
 //RecycledIndices implementation/////////////////////////////////////////////////
 template <class T>
-ResourceManager<T>::AvailableIndices::AvailableIndices(int start = 0, int end = 0) {
-	lowerBound = upperBound = start;
+ResourceManager<T>::AvailableIndices::AvailableIndices(int start = 0, int end = 32767) {
+	lowerBound = start;
+	upperBound = end;
 	next = 0;
 }
 
@@ -102,12 +112,13 @@ void ResourceManager<T>::AvailableIndices::setNext(AvailableIndices* next) {
 }
 
 template <class T>
-void ResourceManager<T>::AvailableIndices::decrementUpperBound() {
+void ResourceManager<T>::AvailableIndices::incrementUpperBound() {
 	upperBound++;
-	if (lowerBound > upperBound && next != 0) {
-		AvailableIndices* tmp = next;
-		*this = *next;
-		delete tmp;
+	if (next != 0 && upperBound == next->lowerBound) {
+		upperBound = next->upperBound;
+		AvailableIndices* n = next;
+		next = next->next;
+		delete n;
 	}
 }
 
@@ -128,10 +139,10 @@ void ResourceManager<T>::AvailableIndices::decrementLowerBound() {
 }
 
 template <class T>
-bool ResourceManager<T>::AvailableIndices::remove(int index) {
-	if (index <= upperBound) {
+bool ResourceManager<T>::AvailableIndices::add(int index) {
+	if (index <= upperBound + 1) {
 		if (index == upperBound + 1) {
-			decrementUpperBound();
+			incrementUpperBound();
 			return true;
 		} else if (index == lowerBound - 1) {
 			decrementLowerBound();
