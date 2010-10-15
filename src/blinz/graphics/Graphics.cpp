@@ -1,9 +1,9 @@
 #include "SDL/SDL.h"
 #include "SDL/SDL_image.h"
+#include "../__Shared.hpp"
 #include "../util/ResourceManager.hpp"
 #include "Graphics.hpp"
 
-SDL_Surface* screen = 0;
 ResourceManager<SDL_Surface*> images;
 
 bool initializeScreen(const string* title, int width, int height) {
@@ -11,6 +11,7 @@ bool initializeScreen(const string* title, int width, int height) {
 	const char* cstr = title->c_str();
 	screen = SDL_SetVideoMode(width, height, 24, SDL_DOUBLEBUF);
 	SDL_WM_SetCaption(cstr, cstr);
+	atexit(SDL_Quit);
 	return screen != 0;
 }
 
