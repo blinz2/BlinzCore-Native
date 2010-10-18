@@ -133,10 +133,14 @@ long mouseWheelScroll(short scrollDistance, long x, long y) {
 }
 
 long keyPress(short key) {
-	return ((key << 3) | 4);
+	return ((((long)key) << 3) | 4);
 }
 
 long keyRelease(short key) {
-	return ((key << 3) | 2);
+	return ((((long)key) << 3) | 2);
+}
+
+void updateInput() {
+	
 }
 

@@ -20,4 +20,5 @@ long mouseButtonRelease(short button, long x, long y);
 long mouseWheelScroll(short scrollDistance, long x, long y);
 long keyPress(short button);
 long keyRelease(short key);
+void updateInput();
 
