@@ -15,7 +15,9 @@
  * 	01-31  scroll distance
  */
 
-int mouseButtonPress(short button);
-int mouseButtonRelease(short button);
-int keyButtonPress(short button);
-int keyButtonRelease(short key);
+long mouseButtonPress(short button, short x, short y);
+long mouseButtonRelease(short button, short x, short y);
+long mouseWheelScroll(short scrollDistance, short x, short y);
+long keyPress(short button);
+long keyRelease(short key);
+
