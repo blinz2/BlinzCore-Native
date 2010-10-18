@@ -112,26 +112,22 @@ void init() {
  * 	01-31  scroll distance
  */
 
-long mouseButtonPress(short button, short x, short y) {
-	long output = button << 3;
+long mouseButtonPress(short button, long x, long y) {
 	long yout = y << 48;
 	long xout = x << 32;
-	output = (ouput | 5) | yout | xout;
-	return output;
+	return (((((long) button)) << 3) | 5) | yout | xout;
 }
 
-long mouseButtonRelease(short button, short x, short y) {
-	long output = button << 3;
+long mouseButtonRelease(short button, long x, long y) {
 	long yout = y << 48;
 	long xout = x << 32;
-	output = (ouput | 2) | yout | xout;
+	return (((((long) button)) << 3) | 2) | yout | xout;
 }
 
-long mouseWheelScroll(short scrollDistance, short x, short y) {
-	long output = scrollDistance << 1;
+long mouseWheelScroll(short scrollDistance, long x, long y) {
 	long yout = y << 48;
 	long xout = x << 32;
-	output = (ouput | 2) | yout | xout;
+	return ((((long) scrollDistance) << 1) | 1) | yout | xout;
 }
 
 long keyPress(short key) {
