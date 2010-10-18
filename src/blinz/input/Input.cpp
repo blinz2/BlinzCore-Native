@@ -140,7 +140,7 @@ long keyRelease(short key) {
 	return ((((long)key) << 3) | 2);
 }
 
-void updateInput() {
+long updateInput() {
 	
 }
 
