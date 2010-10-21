@@ -101,15 +101,15 @@ void init() {
 /*
  * Event:
  * 	bits
- * 	00     0 = key/button status alteration, 1 = mouse wheel scroll
+ * 	00-01  0 = key/button status alteration, 1 = mouse wheel scroll, 2 = exit application, 3 = nothing
  * Button/Key status alteration events:
- * 	01     0 = keyboard, 1 = mouse
- * 	02     0 = release, 1 = press
- * 	03-31  button/key identification
+ * 	02     0 = keyboard, 1 = mouse
+ * 	03     0 = release, 1 = press
+ * 	04-31  button/key identification
  * 	32-48  x coordinate of the cursor on screen
  * 	48-64  y coordinate of the cursor on screen
  * Mouse wheel scroll:
- * 	01-31  scroll distance
+ * 	02-31  scroll distance
  * 	32-48  x coordinate of the cursor on screen
  * 	48-64  y coordinate of the cursor on screen
  */
@@ -117,13 +117,13 @@ void init() {
 long mouseButtonPress(short button, long x, long y) {
 	long yout = y << 48;
 	long xout = x << 32;
-	return (((((long) button)) << 3) | 5) | yout | xout;
+	return (((((long) button)) << 4) | 12) | yout | xout;
 }
 
 long mouseButtonRelease(short button, long x, long y) {
 	long yout = y << 48;
 	long xout = x << 32;
-	return (((((long) button)) << 3) | 2) | yout | xout;
+	return (((((long) button)) << 4) | 4) | yout | xout;
 }
 
 long mouseWheelScroll(short scrollDistance, long x, long y) {
@@ -133,11 +133,11 @@ long mouseWheelScroll(short scrollDistance, long x, long y) {
 }
 
 long keyPress(short key) {
-	return ((((long)key) << 3) | 4);
+	return ((((long)key) << 4) | 4);
 }
 
 long keyRelease(short key) {
-	return ((((long)key) << 3) | 2);
+	return ((((long)key) << 4) | 8);
 }
 
 long updateInput() {
@@ -166,6 +166,10 @@ long updateInput() {
 				case SDL_BUTTON_RIGHT:
 					return mouseButtonRelease(2, e.button.x, e.button.y);
 			}
+		case SDL_QUIT:
+			return 2;
+		default:
+			return 3;
 	}
 }
 
