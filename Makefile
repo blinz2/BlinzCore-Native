@@ -1,4 +1,4 @@
-build/blinz/libBlinzCore.so: build/blinz/graphics/Graphics.o build/blinz/input/Input.o
+build: build/blinz/graphics/Graphics.o build/blinz/input/Input.o
 	g++ -shared -o build/blinz/libBlinzCore.so build/blinz/graphics/Graphics.o
 build/blinz/graphics/Graphics.o: build/blinz/graphics
 	g++ -fPIC -c src/blinz/graphics/Graphics.cpp -o build/blinz/graphics/Graphics.o
@@ -10,3 +10,5 @@ build/blinz/graphics:
 	mkdir -p build/blinz/graphics;
 build/blinz/input:
 	mkdir -p build/blinz/input;
+clean:
+	rm -r build;
