@@ -1,5 +1,9 @@
 build: build/blinz/graphics/Graphics.o build/blinz/input/Input.o
 	g++ -shared -o build/blinz/libBlinzCore.so build/blinz/graphics/Graphics.o
+clean:
+	rm -r build;
+install: build
+	su -c 'cp build/blinz/libBlinzCore.so /usr/lib64; cp -r src/blinz /usr/include';
 build/blinz/graphics/Graphics.o: build/blinz/graphics
 	g++ -fPIC -c src/blinz/graphics/Graphics.cpp -o build/blinz/graphics/Graphics.o
 build/blinz/input/Input.o: build/blinz/input
@@ -10,5 +14,3 @@ build/blinz/graphics:
 	mkdir -p build/blinz/graphics;
 build/blinz/input:
 	mkdir -p build/blinz/input;
-clean:
-	rm -r build;
