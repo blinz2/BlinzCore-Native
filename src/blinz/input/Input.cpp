@@ -140,7 +140,7 @@ long keyRelease(short key) {
 	return ((((long)key) << 4) | 8);
 }
 
-long updateInput() {
+long getInput() {
 	SDL_Event e;
 	SDL_PollEvent(&e);
 	switch (e.type) {

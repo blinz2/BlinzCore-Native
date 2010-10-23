@@ -39,6 +39,12 @@ class ResourceManager {
 		int add(T element);
 		
 		/**
+		 * Gets the value at the specified index.
+		 * @return the value at the specified index
+		 */
+		T get(int index);
+
+		/**
 		 * Removes the item at the given location from the list.
 		 * @param index the index of the element to be removed
 		 * @return the removed element
@@ -66,6 +72,11 @@ int ResourceManager<T>::add(T element) {
 	elements++;
 	list[i] = element;
 	return i;
+}
+
+template <class T>
+T ResourceManager<T>::get(int i) {
+	return list[i];
 }
 
 template <class T>

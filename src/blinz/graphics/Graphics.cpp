@@ -6,17 +6,16 @@
 
 ResourceManager<SDL_Surface*> images;
 
-bool initializeScreen(const string* title, int width, int height) {
+bool initializeScreen(const char* title, int width, int height) {
 	SDL_Init(SDL_INIT_VIDEO);
-	const char* cstr = title->c_str();
 	screen = SDL_SetVideoMode(width, height, 24, SDL_DOUBLEBUF);
-	SDL_WM_SetCaption(cstr, cstr);
+	SDL_WM_SetCaption(title, title);
 	atexit(SDL_Quit);
 	return screen != 0;
 }
 
-int loadImage(const string* path) {
-	SDL_Surface* img1 = IMG_Load(path->c_str());
+int loadImage(const char* path) {
+	SDL_Surface* img1 = IMG_Load(path);
 	SDL_Surface* img2 = SDL_DisplayFormat(img1);
 	SDL_FreeSurface(img1);
 	return images.add(img1);
