@@ -29,3 +29,34 @@ int loadImage(const string* path);
  * @param index the identification number of the image to unload
  */
 void unloadImage(int index);
+
+/**
+ * Updates the graphics system, should be updated once per draw cycle.
+ */
+void updateGraphics();
+
+/**
+ * Sets the color with which graphics primitives will be drawn.
+ * @param red the red value of the RGB color
+ * @param green the green value of the RGB color
+ * @param blue the blue value of the RGB color
+ */
+void setColor(int red, int green, int blue);
+
+/**
+ * Draws a line from the first point to the second point.
+ * @param x1 the x coordinate of point 1
+ * @param y1 the y coordinate of point 1
+ * @param x2 the x coordinate of point 2
+ * @param y2 the y coordinate of point 2
+ */
+void drawLine(int x1, int y1, int x2, int y2);
+
+/**
+ * Draws a rectangle.
+ * @param x1 the x coordinate of rectangle
+ * @param y1 the y coordinate of rectangle
+ * @param x2 the x coordinate of rectangle
+ * @param y2 the y coordinate of rectangle
+ */
+void drawRect(int x1, int y1, int x2, int y2);
