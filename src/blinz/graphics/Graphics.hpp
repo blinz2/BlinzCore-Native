@@ -8,7 +8,7 @@ using std::string;
  * @param width the new width of the screen
  * @param height the new height of the screen
  */
-bool initializeScreen(const char* title, int width, int height);
+void initializeScreen(const char* title, int width, int height);
 
 /**
  * Sets the screen size.

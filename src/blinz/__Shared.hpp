@@ -1,3 +1,3 @@
-#include "SDL/SDL.h"
+#include "SFML/Window.hpp"
 
-SDL_Surface* screen = 0;
+sf::Window window;

@@ -141,35 +141,5 @@ long keyRelease(short key) {
 }
 
 long getInput() {
-	SDL_Event e;
-	SDL_PollEvent(&e);
-	switch (e.type) {
-		case SDL_KEYDOWN:
-			return keyPress(e.key.keysym.sym);
-		case SDL_KEYUP:
-			return keyRelease(e.key.keysym.sym);
-		case SDL_MOUSEBUTTONDOWN:
-			switch (e.button.button) {
-				case SDL_BUTTON_LEFT:
-					return mouseButtonPress(0, e.button.x, e.button.y);
-				case SDL_BUTTON_MIDDLE: 
-					return mouseButtonPress(1, e.button.x, e.button.y);
-				case SDL_BUTTON_RIGHT:
-					return mouseButtonPress(2, e.button.x, e.button.y);
-			}
-		case SDL_MOUSEBUTTONUP:
-			switch (e.button.button) {
-				case SDL_BUTTON_LEFT:
-					return mouseButtonRelease(0, e.button.x, e.button.y);
-				case SDL_BUTTON_MIDDLE: 
-					return mouseButtonRelease(1, e.button.x, e.button.y);
-				case SDL_BUTTON_RIGHT:
-					return mouseButtonRelease(2, e.button.x, e.button.y);
-			}
-		case SDL_QUIT:
-			return 2;
-		default:
-			return 3;
-	}
 }
 
