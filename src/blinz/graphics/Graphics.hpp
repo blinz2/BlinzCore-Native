@@ -1,6 +1,3 @@
-#include <string>
-
-using std::string;
 
 /**
  * Initializes the screen.
@@ -22,7 +19,7 @@ void setScreenSize(int width, int height);
  * @param path path to the image on the disk
  * @return the identification number for handling the image
  */
-int loadImage(const string* path);
+int loadImage(const char* path);
 
 /**
  * Unloads the image from memory.

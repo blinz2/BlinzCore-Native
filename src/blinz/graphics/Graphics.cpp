@@ -1,14 +1,14 @@
+#include <vector>
 #include "../__Shared.hpp"
 #include "../util/ResourceManager.hpp"
-#include <SFML/Graphics/Image.hpp>
-#include <SFML/Graphics/Sprite.hpp>
+#include "Image.hpp"
 #include "Graphics.hpp"
 
-using sf::Image;
-using sf::Sprite;
+using std::vector;
 using sf::Window;
 
-ResourceManager<Sprite*> images;
+vector<int> imagesToLoad, imagesToDelete;
+ResourceManager<Image*> images;
 char red = 0, green = 0, blue = 0, alpha = 255;
 
 void initializeScreen(const char* title, int width = 1024, int height = 768) {
@@ -16,18 +16,18 @@ void initializeScreen(const char* title, int width = 1024, int height = 768) {
 }
 
 int loadImage(const char* path) {
-	Image image;
-	image.LoadFromFile(path);
-	Sprite *sprite = new Sprite();
-	sprite->SetImage(image);
-	images.add(sprite);
+	images.add(new Image(path));
 }
 
 void unloadImage(int index) {
-	delete images.remove(index);
+	images.remove(index);
 }
 
 void updateGraphics() {
+	while (imagesToLoad.size() > 0) {
+		images.get(imagesToLoad[imagesToLoad.back()])->load();
+		imagesToLoad.pop_back();
+	}
 }
 
 void setColor(int r, int g, int b) {
@@ -35,10 +35,8 @@ void setColor(int r, int g, int b) {
 	green = g;
 	blue = b;
 }
+
 void drawImage(int imageID, int x1, int y1, int x2, int y2) {
-	Sprite *sprite = images.get(imageID);
-	sprite->setX(x1);
-	
 }
 
 void drawLine(int x1, int y1, int x2, int y2) {
