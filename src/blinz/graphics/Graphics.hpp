@@ -44,6 +44,16 @@ void updateGraphics();
 void setColor(int red, int green, int blue);
 
 /**
+ * Draws the image associated with the given imageID.
+ * @param imageID the imageID of the desired image
+ * @param x1 the x coordinate of the top left corner of the image
+ * @param y1 the y coordinate of the top left corner of the image
+ * @param x2 the x coordinate of the bottom right corner of the image
+ * @param y2 the y coordinate of the bottom right corner of the image
+ */
+void drawImage(int imageID, int x1, int y1, int x2, int y2);
+
+/**
  * Draws a line from the first point to the second point.
  * @param x1 the x coordinate of point 1
  * @param y1 the y coordinate of point 1

@@ -35,6 +35,11 @@ void setColor(int r, int g, int b) {
 	green = g;
 	blue = b;
 }
+void drawImage(int imageID, int x1, int y1, int x2, int y2) {
+	Sprite *sprite = images.get(imageID);
+	sprite->setX(x1);
+	
+}
 
 void drawLine(int x1, int y1, int x2, int y2) {
 }
